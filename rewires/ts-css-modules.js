@@ -28,6 +28,8 @@ const cssModuleRuleMatcher = (rule) =>
 const cssRuleMatcher = (rule) =>
   rule.test && String(rule.test) === String(/\.css$/);
 
+const stylusModuleMatcher = (rule) => rule.test && String(rule.test) === String( /\.m\.styl$/)
+
 module.exports = function (config, env) {
   const cssModuleRule = findRule(config.module.rules, cssModuleRuleMatcher);
   cssModuleRule.use.splice(1, 0, {
@@ -37,6 +39,11 @@ module.exports = function (config, env) {
 
   const cssRule = findRule(config.module.rules, cssRuleMatcher);
   cssRule.use.splice(1, 0, {
+    loader: require.resolve("@teamsupercell/typings-for-css-modules-loader"),
+    options: {},
+  });
+  const stylusModuleRule = findRule(config.module.rules, stylusModuleMatcher)
+  stylusModuleRule.use.splice(1, 0, {
     loader: require.resolve("@teamsupercell/typings-for-css-modules-loader"),
     options: {},
   });
