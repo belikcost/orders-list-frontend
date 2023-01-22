@@ -25,41 +25,43 @@ const OrdersList = observer(
           <div className={styles.screen}>
             {state.loading && <span>Loading...</span>}
             {!state.loading && (
-              <div className={styles.table}>
-                <div className={styles.head}>
-                  <div className={styles.row}>
-                    <div>Номер</div>
-                    <div>Создан</div>
-                    <div>Доставка</div>
-                    <div>В работе</div>
-                    <div>Статус</div>
+              <>
+                  <div className={styles.table}>
+                      <div className={styles.head}>
+                          <div className={styles.row}>
+                              <div>Номер</div>
+                              <div>Создан</div>
+                              <div>Доставка</div>
+                              <div>В работе</div>
+                              <div>Статус</div>
+                          </div>
+                      </div>
+                      <div>
+                          {map(state.orders, (order: OrdersListItem, index: number) => (
+                              <ListItem order={order} key={index} />
+                          ))}
+                      </div>
                   </div>
-                </div>
-                <div className={styles.body}>
-                  {map(state.orders, (order: OrdersListItem, index: number) => (
-                    <ListItem order={order} key={index} />
-                  ))}
-                </div>
-              </div>
+                  <div className={styles.pagination}>
+                      <Button
+                          small
+                          text="PREV"
+                          icon={AngleLeftIcon}
+                          resting
+                          disabled={!state.canPrev}
+                          onClick={() => state.prevPage()}
+                      />
+                      <Button
+                          small
+                          text="NEXT"
+                          rightIcon={AngleRightIcon}
+                          resting
+                          disabled={!state.canNext}
+                          onClick={() => state.nextPage()}
+                      />
+                  </div>
+              </>
             )}
-            <div className={styles.pagination}>
-              <Button
-                small
-                text="PREV"
-                icon={AngleLeftIcon}
-                resting
-                disabled={!state.canPrev}
-                onClick={() => state.prevPage()}
-              />
-              <Button
-                small
-                text="NEXT"
-                rightIcon={AngleRightIcon}
-                resting
-                disabled={!state.canNext}
-                onClick={() => state.nextPage()}
-              />
-            </div>
           </div>
         </div>
       </React.Fragment>

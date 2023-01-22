@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const ORDER_QUERY = gql`
-  query Order($number: String!) {
-    order(number: $number) {
+  query Order($id: Int!) {
+    order(id: $id) {
       number
       status
       id

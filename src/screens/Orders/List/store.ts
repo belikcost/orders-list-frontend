@@ -25,14 +25,6 @@ export default class OrdersListState {
     this.orders = orders;
   }
 
-  startLoading(): void {
-    this.loading = true;
-  }
-
-  stopLoading(): void {
-    this.loading = false;
-  }
-
   setPage(page: number): void {
     this.page = page;
     const url = new URL(window.location.href);
@@ -70,7 +62,12 @@ export default class OrdersListState {
 
   async loadOrders() {
     this.loading = true;
-    this.loading = false;
+    client.query(GET_ORDERS_QUERY, { page: this.page }).toPromise().then((result) => {
+      this.setOrders(result.data.getOrders.orders)
+      this.setPage(result.data.getOrders.pagination.currentPage)
+      this.setTotalPages(result.data.getOrders.pagination.totalPageCount)
+      this.loading = false;
+    })
   }
 
   initialize() {
